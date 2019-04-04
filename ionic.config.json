@@ -1,5 +1,7 @@
 {
   "name": "calculatorJasmineKarma",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

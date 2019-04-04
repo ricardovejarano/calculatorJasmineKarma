@@ -1,14 +1,149 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Calculator
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+
+  <ion-grid>
+    <ion-row id="rowSimpleCalculator" center>
+      <ion-col text-center col-6>
+        <ion-label>{{result === '' ? '': 'Result'}}</ion-label>
+      </ion-col>
+      <ion-col text-center col-6>
+        <ion-label>{{result}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>
+        <ion-item>
+          <ion-input autofocus="true" placeholder="Number 1" [(ngModel)]="firstNumber" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item>
+          <ion-input [(ngModel)]="secondNumber" placeholder="Number 2" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>
+        <ion-button (click)="renderResult(0, firstNumber, secondNumber)" expand="block">Add</ion-button>
+      </ion-col>
+      <ion-col col-3>
+        <ion-button (click)="renderResult(1, firstNumber, secondNumber)" expand="block">Subs</ion-button>
+      </ion-col>
+      <ion-col col-3>
+        <ion-button (click)="renderResult(2, firstNumber, secondNumber)" expand="block">Mul</ion-button>
+      </ion-col>
+      <ion-col col-3>
+        <ion-button (click)="renderResult(3, firstNumber, secondNumber)" expand="block">Div</ion-button>
+      </ion-col>
+      <ion-col col-12>
+        <ion-button (click)="renderResult(4, firstNumber, secondNumber)" expand="block">Pow</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-button (click)="clear()" expand="block">Clear</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid id="complexCalculatorBody">
+    <ion-row id="complexCalculatorScreen1" style="margin-top:2rem">
+      <ion-col text-center col-12>
+      </ion-col>
+      <ion-label>{{parcialOperation}}{{actualNumber === 0 ? '' : actualNumber}}</ion-label>
+    </ion-row>
+    <ion-row id="complexCalculatorScreen2">
+      <ion-col text-center col-12>
+        {{resultComplex === 0 ? '' : resultComplex}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation('c')" expand="full">c</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation('÷')" expand="full">÷</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button expand="full" (click)="renderParcialOperation('x')">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button expand="full" (click)="renderParcialOperation('-')">Dell</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation(7)" expand="full">7</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation(8)" expand="full">8</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation(9)" expand="full">9</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button expand="full" (click)="renderParcialOperation('-')">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation(4)" expand="full">4</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation(5)" expand="full">5</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button (click)="renderParcialOperation(6)" expand="full">6</ion-button>
+      </ion-col>
+      <ion-col text-center col-3 no-padding>
+        <ion-button expand="full" (click)="renderParcialOperation('+')">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-center size="9" no-padding>
+        <ion-row>
+          <ion-col text-center col-3 no-padding>
+            <ion-button (click)="renderParcialOperation(1)" expand="full">1</ion-button>
+          </ion-col>
+          <ion-col text-center col-3 no-padding>
+            <ion-button (click)="renderParcialOperation(2)" expand="full">2</ion-button>
+          </ion-col>
+          <ion-col text-center col-3 no-padding>
+            <ion-button (click)="renderParcialOperation(3)" expand="full">3</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center col-3 no-padding>
+            <ion-button (click)="renderParcialOperation('%')" expand="full">%</ion-button>
+          </ion-col>
+          <ion-col text-center col-3 no-padding>
+            <ion-button (click)="renderParcialOperation(0)" expand="full">0</ion-button>
+          </ion-col>
+          <ion-col text-center col-3 no-padding>
+            <ion-button (click)="renderParcialOperation(',')" expand="full">,</ion-button>
+          </ion-col>
+
+        </ion-row>
+      </ion-col>
+      <ion-col text-center id="vertical-align-content" size="3" no-padding>
+        <ion-button (click)="equal()" id="equalButton" expand="full">=</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-content>
